@@ -15,10 +15,16 @@ namespace StudentAI
         public string Name
         {
 #if DEBUG
-            get { return "StudentAI (Debug)"; }
+            get { return "Awesomes (Debug)"; }
 #else
-            get { return "StudentAI"; }
+            get { return "Awesomes"; }
 #endif
+        }
+
+        private List<ChessMove> GenerateMoves(ChessBoard board, ChessColor color)
+        {
+
+            return null;
         }
 
         /// <summary>
@@ -30,6 +36,7 @@ namespace StudentAI
         /// <returns> Returns the best chess move the player has for the given chess board</returns>
         public ChessMove GetNextMove(ChessBoard board, ChessColor myColor)
         {
+            
             throw (new NotImplementedException());
         }
 
