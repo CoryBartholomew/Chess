@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UvsChess;
 
 namespace StudentAI
@@ -9,7 +6,7 @@ namespace StudentAI
     public class MoveGenerator
     {
         public List<ChessMove> Moves { get; set; }
- 
+
         public void GenerateMoves(ChessBoard board, ChessColor color)
         {
             Moves = new List<ChessMove>();
@@ -17,33 +14,33 @@ namespace StudentAI
             {
                 for (int x = 0; x < ChessBoard.NumberOfColumns; x++)
                 {
-                    if(color == ChessColor.White) // if play is white
+                    if (color == ChessColor.White) // if play is white
                     {
-                        if(board[x,y] > ChessPiece.Empty)
+                        if (board[x, y] > ChessPiece.Empty)
                         {
-                            switch (board[x,y])
+                            switch (board[x, y])
                             {
-                                    case ChessPiece.WhiteBishop:
-                                    BishopMoves(board,x,y,color);
+                                case ChessPiece.WhiteBishop:
+                                    BishopMoves(board, x, y, color);
                                     break;
-                                    case ChessPiece.WhiteQueen:
-                                    QueenMoves(board,x,y,color);
+                                case ChessPiece.WhiteQueen:
+                                    QueenMoves(board, x, y, color);
                                     break;
-                                    case ChessPiece.WhiteKing:
+                                case ChessPiece.WhiteKing:
                                     break;
-                                    case ChessPiece.WhiteKnight:
-                                    KnightMoves(board,x,y, color);
+                                case ChessPiece.WhiteKnight:
+                                    KnightMoves(board, x, y, color);
                                     break;
-                                    case ChessPiece.WhitePawn:
-                                    PawnMoves(board,x,y,color);
+                                case ChessPiece.WhitePawn:
+                                    PawnMoves(board, x, y, color);
                                     break;
-                                    case ChessPiece.WhiteRook:
-                                    RookMoves(board,x,y,color);
+                                case ChessPiece.WhiteRook:
+                                    RookMoves(board, x, y, color);
                                     break;
                             }
                         }
                     }
-                    else
+                    else if ( color == ChessColor.Black)
                     {
                         switch (board[x, y])
                         {
@@ -74,34 +71,34 @@ namespace StudentAI
         {
             if (color == ChessColor.White)
             {
-                if(board[x - 1, y] == ChessPiece.Empty)
+                if (x - 1 > 0 && board[x - 1, y] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x,y), new ChessLocation(x - 1, y)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 1, y)));
                 }
-                if(y > 0 && board[x - 1, y -1] < ChessPiece.Empty) 
+                if (y > 0 && x - 1 > 0 && board[x - 1, y - 1] < ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x,y), new ChessLocation(x - 1, y - 1)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 1, y - 1)));
                 }
-                if (y < ChessBoard.NumberOfColumns && board[x - 1, y + 1] < ChessPiece.Empty)
+                if (y < ChessBoard.NumberOfColumns && x - 1 > 0 && board[x - 1, y + 1] < ChessPiece.Empty)
                 {
                     Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 1, y + 1)));
                 }
-                if(x == 6 && board[x -1, y] == ChessPiece.Empty && board[x - 2, y] == ChessPiece.Empty)
+                if (x == 6 && board[x - 1, y] == ChessPiece.Empty && board[x - 2, y] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x,y),new ChessLocation(x - 2, y) ));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 2, y)));
                 }
             }
             else
             {
-                if (board[x + 1, y] == ChessPiece.Empty)
+                if (x < ChessBoard.NumberOfRows && board[x + 1, y] == ChessPiece.Empty)
                 {
                     Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y)));
                 }
-                if (y > 0 && board[x + 1, y - 1] > ChessPiece.Empty)
+                if (y > 0 && x + 1 < ChessBoard.NumberOfRows && board[x + 1, y - 1] > ChessPiece.Empty)
                 {
                     Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y - 1)));
                 }
-                if (y < ChessBoard.NumberOfColumns && board[x + 1, y + 1] < ChessPiece.Empty)
+                if (y < ChessBoard.NumberOfColumns && x + 1 < ChessBoard.NumberOfRows && board[x + 1, y + 1] < ChessPiece.Empty)
                 {
                     Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y + 1)));
                 }
@@ -115,22 +112,22 @@ namespace StudentAI
         private void RookMoves(ChessBoard board, int x, int y, ChessColor color)
         {
             ChessColor killColor = ChessColor.White;
-            if(color == ChessColor.White)
+            if (color == ChessColor.White)
             {
                 killColor = ChessColor.Black;
             }
-            
+
             for (int i = x + 1; i < ChessBoard.NumberOfRows; i++) // direction down
             {
-                if(board[i, y] == ChessPiece.Empty)
+                if (board[i, y] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x,y),new ChessLocation(i, y)) );
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, y)));
                 }
                 else
                 {
                     if ((board[i, y] > ChessPiece.Empty && killColor == ChessColor.White) || (board[i, y] < ChessPiece.Empty && killColor == ChessColor.Black))
                     {
-                        Moves.Add(new ChessMove(new ChessLocation(x,y),new ChessLocation(i,y) ));
+                        Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, y)));
                     }
                     break;
                 }
@@ -154,7 +151,7 @@ namespace StudentAI
             }
             for (int j = y - 1; j > 0; j--) // direction left
             {
-                if (board[x,j] == ChessPiece.Empty)
+                if (board[x, j] == ChessPiece.Empty)
                 {
                     Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, j)));
                 }
@@ -168,7 +165,7 @@ namespace StudentAI
                 }
 
             }
-            for (int j = y + 1; j > 0; j++) // direction right
+            for (int j = y + 1; j < ChessBoard.NumberOfColumns; j++) // direction right
             {
                 if (board[x, j] == ChessPiece.Empty)
                 {
@@ -197,9 +194,9 @@ namespace StudentAI
             int i = x - 2;
             int j = y - 1;
             //up left direction
-            if(i > 0 && j > 0 && (board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+            if (i > 0 && j > 0 && (board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
             {
-                Moves.Add(new ChessMove(new ChessLocation(x,y),new ChessLocation(i,j) ));
+                Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
             }
             // up right direction
             j = y + 1;
@@ -259,11 +256,11 @@ namespace StudentAI
             }
             int i = x - 1;
             int j = y - 1;
-            while(i > 0 && j > 0) // up left direction
+            while (i > 0 && j > 0) // up left direction
             {
-                if(board[i,j] == ChessPiece.Empty)
+                if (board[i, j] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x,y),new ChessLocation(i,j) ));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
                 }
                 else
                 {
@@ -331,8 +328,8 @@ namespace StudentAI
 
         private void QueenMoves(ChessBoard board, int x, int y, ChessColor color)
         {
-            RookMoves(board,x,y,color);
-            BishopMoves(board,x,y, color);
+            RookMoves(board, x, y, color);
+            BishopMoves(board, x, y, color);
         }
 
         private void KingMoves(ChessBoard board, int x, int y, ChessColor color)
@@ -340,14 +337,14 @@ namespace StudentAI
             if (color == ChessColor.White)
             {
                 //king moves up
-                if(x > 0 && (board[x - 1, y] == ChessPiece.Empty || board[x-1,y] < ChessPiece.Empty))
+                if (x > 0 && (board[x - 1, y] == ChessPiece.Empty || board[x - 1, y] < ChessPiece.Empty))
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x,y), new ChessLocation(x - 1, y)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 1, y)));
                 }
                 // king moves up and left
-                if(y > 0 && x > 0 && (board[x - 1, y -1] == ChessPiece.Empty || board[x-1, y-1] < ChessPiece.Empty))
+                if (y > 0 && x > 0 && (board[x - 1, y - 1] == ChessPiece.Empty || board[x - 1, y - 1] < ChessPiece.Empty))
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x,y), new ChessLocation(x - 1, y - 1)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 1, y - 1)));
                 }
                 // king moves up and right
                 if (y < ChessBoard.NumberOfColumns && x > 0 && (board[x - 1, y + 1] == ChessPiece.Empty || board[x - 1, y + 1] < ChessPiece.Empty))
@@ -355,14 +352,14 @@ namespace StudentAI
                     Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 1, y + 1)));
                 }
                 //king right moves
-                if(y < ChessBoard.NumberOfColumns && (board[x, y + 1] == ChessPiece.Empty || board[x, y + 1] == ChessPiece.Empty ))
+                if (y < ChessBoard.NumberOfColumns && (board[x, y + 1] == ChessPiece.Empty || board[x, y + 1] == ChessPiece.Empty))
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x,y), new ChessLocation(x, y + 1)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, y + 1)));
                 }
                 //king moves left
-                if(y > 0 && (board[x, y -1] < ChessPiece.Empty || board[x, y - 1] < ChessPiece.Empty)) 
+                if (y > 0 && (board[x, y - 1] < ChessPiece.Empty || board[x, y - 1] < ChessPiece.Empty))
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x,y), new ChessLocation(x, y - 1)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, y - 1)));
                 }
                 //king moves down and left
                 if (y > 0 && x < ChessBoard.NumberOfRows && board[x + 1, y - 1] < ChessPiece.Empty)
@@ -370,9 +367,9 @@ namespace StudentAI
                     Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y - 1)));
                 }
                 //king moves down
-                if(x < ChessBoard.NumberOfRows && (board[x + 1, y] == ChessPiece.Empty || board[x + 1, y] < ChessPiece.Empty))
+                if (x < ChessBoard.NumberOfRows && (board[x + 1, y] == ChessPiece.Empty || board[x + 1, y] < ChessPiece.Empty))
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x,y),new ChessLocation(x + 1, y) ));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y)));
                 }
                 //king moves down and right
                 if (y < ChessBoard.NumberOfColumns && x < ChessBoard.NumberOfRows && (board[x + 1, y + 1] == ChessPiece.Empty || board[x + 1, y + 1] < ChessPiece.Empty))
@@ -400,6 +397,6 @@ namespace StudentAI
                 }
             }
         }
-        }
     }
 }
+

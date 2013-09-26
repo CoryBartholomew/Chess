@@ -8,7 +8,7 @@ namespace StudentAI
     public class StudentAI : IChessAI
     {
         #region IChessAI Members that are implemented by the Student
-
+        private MoveGenerator moveGenerator = new MoveGenerator();
         /// <summary>
         /// The name of your AI
         /// </summary>
@@ -36,8 +36,8 @@ namespace StudentAI
         /// <returns> Returns the best chess move the player has for the given chess board</returns>
         public ChessMove GetNextMove(ChessBoard board, ChessColor myColor)
         {
-            
-            throw (new NotImplementedException());
+            moveGenerator.GenerateMoves(board,myColor);
+            return moveGenerator.Moves[1];
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace StudentAI
         /// <returns>Returns true if the move was valid</returns>
         public bool IsValidMove(ChessBoard boardBeforeMove, ChessMove moveToCheck, ChessColor colorOfPlayerMoving)
         {
-            throw (new NotImplementedException());
+            return true;
         }
 
         #endregion
