@@ -14,7 +14,7 @@ namespace StudentAI
             {
                 for (int x = 0; x < ChessBoard.NumberOfColumns; x++)
                 {
-                    if (color == ChessColor.White) // if play is white
+                    if (color == ChessColor.White) // if player is white
                     {
                         if (board[x, y] > ChessPiece.Empty)
                         {
@@ -71,40 +71,40 @@ namespace StudentAI
         {
             if (color == ChessColor.White)
             {
-                if (x - 1 > 0 && board[x - 1, y] == ChessPiece.Empty)
+                if (y - 1 > 0 && board[x , y - 1] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 1, y)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x , y - 1)));
                 }
-                if (y > 0 && x - 1 > 0 && board[x - 1, y - 1] < ChessPiece.Empty)
+                if (y  - 1 > 0 && x - 1 > 0 && board[x - 1, y - 1] < ChessPiece.Empty)
                 {
                     Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 1, y - 1)));
                 }
-                if (y < ChessBoard.NumberOfColumns && x - 1 > 0 && board[x - 1, y + 1] < ChessPiece.Empty)
+                if (y - 1  < ChessBoard.NumberOfColumns && x + 1 < ChessBoard.NumberOfRows && board[x + 1, y - 1] < ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 1, y + 1)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y - 1)));
                 }
-                if (x == 6 && board[x - 1, y] == ChessPiece.Empty && board[x - 2, y] == ChessPiece.Empty)
+                if (y == 6 && board[x, y - 1] == ChessPiece.Empty && board[x , y - 2] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 2, y)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, y - 2)));
                 }
             }
             else
             {
-                if (x < ChessBoard.NumberOfRows && board[x + 1, y] == ChessPiece.Empty)
+                if (y + 1 < ChessBoard.NumberOfRows && board[x , y + 1] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, y + 1)));
                 }
-                if (y > 0 && x + 1 < ChessBoard.NumberOfRows && board[x + 1, y - 1] > ChessPiece.Empty)
+                if (y + 1 < ChessBoard.NumberOfRows && x + 1 < ChessBoard.NumberOfColumns && board[x + 1, y + 1] > ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y - 1)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y + 1)));
                 }
                 if (y < ChessBoard.NumberOfColumns && x + 1 < ChessBoard.NumberOfRows && board[x + 1, y + 1] < ChessPiece.Empty)
                 {
                     Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y + 1)));
                 }
-                if (x == 2 && board[x + 1, y] == ChessPiece.Empty && board[x + 2, y] == ChessPiece.Empty)
+                if (y == 2 && board[x , y + 1] == ChessPiece.Empty && board[x , y + 2] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 2, y)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, y + 2)));
                 }
             }
         }
@@ -117,65 +117,65 @@ namespace StudentAI
                 killColor = ChessColor.Black;
             }
 
-            for (int i = x + 1; i < ChessBoard.NumberOfRows; i++) // direction down
+            for (int i = y + 1; i < ChessBoard.NumberOfRows; i++) // direction down
             {
-                if (board[i, y] == ChessPiece.Empty)
+                if (board[x, i] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, y)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, i)));
                 }
                 else
                 {
-                    if ((board[i, y] > ChessPiece.Empty && killColor == ChessColor.White) || (board[i, y] < ChessPiece.Empty && killColor == ChessColor.Black))
+                    if ((board[x, i] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, i] < ChessPiece.Empty && killColor == ChessColor.Black))
                     {
-                        Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, y)));
+                        Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, i)));
                     }
                     break;
                 }
 
             }
-            for (int i = x - 1; i > 0; i--) // direction up
+            for (int i = y - 1; i >= 0; i--) // direction up
             {
-                if (board[i, y] == ChessPiece.Empty)
+                if (board[x, i] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, y)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, i)));
                 }
                 else
                 {
-                    if ((board[i, y] > ChessPiece.Empty && killColor == ChessColor.White) || (board[i, y] < ChessPiece.Empty && killColor == ChessColor.Black))
+                    if ((board[x, i] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, i] < ChessPiece.Empty && killColor == ChessColor.Black))
                     {
-                        Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, y)));
+                        Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, i)));
                     }
                     break;
                 }
 
             }
-            for (int j = y - 1; j > 0; j--) // direction left
+            for (int j = x - 1; j > 0; j--) // direction left
             {
-                if (board[x, j] == ChessPiece.Empty)
+                if (board[j, y] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, j)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(j, y)));
                 }
                 else
                 {
-                    if ((board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+                    if ((board[j, y] > ChessPiece.Empty && killColor == ChessColor.White) || (board[j, y] < ChessPiece.Empty && killColor == ChessColor.Black))
                     {
-                        Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, j)));
+                        Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(j, y)));
                     }
                     break;
                 }
 
             }
-            for (int j = y + 1; j < ChessBoard.NumberOfColumns; j++) // direction right
+            for (int j = x + 1; j < ChessBoard.NumberOfColumns; j++) // direction right
             {
-                if (board[x, j] == ChessPiece.Empty)
+                if (board[j, y] == ChessPiece.Empty)
                 {
-                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, j)));
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(j,y)));
                 }
                 else
                 {
-                    if ((board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+                    if ((board[j, y] > ChessPiece.Empty && killColor == ChessColor.White) || (board[j, y] < ChessPiece.Empty && killColor == ChessColor.Black))
                     {
-                        Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, j)));
+                        Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(j, y)));
                     }
                     break;
                 }
@@ -191,57 +191,82 @@ namespace StudentAI
             {
                 killColor = ChessColor.Black;
             }
-            int i = x - 2;
-            int j = y - 1;
+            int x1 = x - 1;
+            int y1 = y - 2;
             //up left direction
-            if (i > 0 && j > 0 && (board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+            if ((x1 >= 0 && y1 >= 0 ))
             {
-                Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
+                if ((board[x1, y1] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x1, y1] < ChessPiece.Empty && killColor == ChessColor.Black) || board[x1, y1] == ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x1, y1)));
+                }
+                
             }
             // up right direction
-            j = y + 1;
-            if (i > 0 && j < ChessBoard.NumberOfColumns && (board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+            x1 = x + 1;
+            if ((x1 < ChessBoard.NumberOfColumns && y1 >= 0 )  )
             {
-                Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
+                if ((board[x1, y1] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x1, y1] < ChessPiece.Empty && killColor == ChessColor.Black) || board[x1, y1] == ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x1, y1)));
+                }
             }
             // right up direction
-            j = y + 2;
-            i = x - 1;
-            if (i > 0 && j < ChessBoard.NumberOfColumns && (board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+            y1 = y - 1;
+            x1 = x + 2;
+            if (x1 < ChessBoard.NumberOfColumns && y1 >= 0)
             {
-                Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
+                if ((board[x1, y1] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x1, y1] < ChessPiece.Empty && killColor == ChessColor.Black) || board[x1, y1] == ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x1, y1)));
+                }
             }
             // right down direction
-            i = x + 1;
-            if (i < ChessBoard.NumberOfRows && j < ChessBoard.NumberOfColumns && (board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+            y1 = y + 1;
+            if (x1 < ChessBoard.NumberOfRows && y1 < ChessBoard.NumberOfColumns)
             {
-                Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
+                if ((board[x1, y1] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x1, y1] < ChessPiece.Empty && killColor == ChessColor.Black) || board[x1, y1] == ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x1, y1)));
+                }
             }
             // down left direction
-            i = x + 2;
-            j = y - 1;
-            if (i < ChessBoard.NumberOfRows && j > 0 && (board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+            x1 = x - 1;
+            y1 = y + 2;
+            if (x1 >= 0  && y1 < ChessBoard.NumberOfRows)
             {
-                Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
+                if ((board[x1, y1] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x1, y1] < ChessPiece.Empty && killColor == ChessColor.Black) || board[x1, y1] == ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x1, y1)));
+                }
             }
             //down right direction
-            j = y + 1;
-            if (i < ChessBoard.NumberOfRows && j < ChessBoard.NumberOfColumns && (board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+            x1 = x + 1;
+            if (x1 < ChessBoard.NumberOfRows && y1 < ChessBoard.NumberOfColumns )
             {
-                Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
+                if ((board[x1, y1] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x1, y1] < ChessPiece.Empty && killColor == ChessColor.Black) || board[x1, y1] == ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x1, y1)));
+                }
             }
             // left up direction
-            i = x - 2;
-            j = y - 1;
-            if (i > 0 && j > 0 && (board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+            x1 = x - 2;
+            y1 = y - 1;
+            if (x1 >= 0 && y1 >= 0 )
             {
-                Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
+                if ((board[x1, y1] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x1, y1] < ChessPiece.Empty && killColor == ChessColor.Black) || board[x1, y1] == ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x1, y1)));
+                }
             }
             // left down direction
-            j = y + 1;
-            if (i > 0 && j < ChessBoard.NumberOfColumns && (board[x, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+            y1 = y + 1;
+            if (x1 >= 0 && y1 < ChessBoard.NumberOfColumns )
             {
-                Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
+                if ((board[x1, y1] > ChessPiece.Empty && killColor == ChessColor.White) || (board[x1, y1] < ChessPiece.Empty && killColor == ChessColor.Black) || board[x1, y1] == ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x1, y1)));
+                }
             }
 
 
@@ -264,7 +289,7 @@ namespace StudentAI
                 }
                 else
                 {
-                    if ((board[i, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[i, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+                    if ((board[i, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[i, j] < ChessPiece.Empty && killColor == ChessColor.Black) )
                     {
                         Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, j)));
                     }
@@ -273,24 +298,7 @@ namespace StudentAI
                 i--;
                 j--;
             }
-            while (i > 0 && j < ChessBoard.NumberOfColumns) // up rifht direction
-            {
-                if (board[i, j] == ChessPiece.Empty)
-                {
-                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
-                }
-                else
-                {
-                    if ((board[i, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[i, j] < ChessPiece.Empty && killColor == ChessColor.Black))
-                    {
-                        Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, j)));
-                    }
-                    break;
-                }
-                i--;
-                j++;
-            }
-            while (i < ChessBoard.NumberOfRows && j > 0) // down left direction
+            while (i > 0 && j < ChessBoard.NumberOfColumns) // up right direction
             {
                 if (board[i, j] == ChessPiece.Empty)
                 {
@@ -307,7 +315,24 @@ namespace StudentAI
                 i++;
                 j--;
             }
-            while (i < ChessBoard.NumberOfRows && j < ChessBoard.NumberOfColumns) // up left direction
+            while (i < ChessBoard.NumberOfRows && j > 0) // down left direction
+            {
+                if (board[i, j] == ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(i, j)));
+                }
+                else
+                {
+                    if ((board[i, j] > ChessPiece.Empty && killColor == ChessColor.White) || (board[i, j] < ChessPiece.Empty && killColor == ChessColor.Black))
+                    {
+                        Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x, j)));
+                    }
+                    break;
+                }
+                i--;
+                j++;
+            }
+            while (i < ChessBoard.NumberOfRows && j < ChessBoard.NumberOfColumns) // down right direction
             {
                 if (board[i, j] == ChessPiece.Empty)
                 {
