@@ -335,9 +335,71 @@ namespace StudentAI
             BishopMoves(board,x,y, color);
         }
 
-        private void KingMoves(ChessBoard board, int x, int y)
+        private void KingMoves(ChessBoard board, int x, int y, ChessColor color)
         {
-
+            if (color == ChessColor.White)
+            {
+                //king moves up
+                if(x > 0 && (board[x - 1, y] == ChessPiece.Empty || board[x-1,y] < ChessPiece.Empty))
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x,y), new ChessLocation(x - 1, y)));
+                }
+                // king moves up and left
+                if(y > 0 && x > 0 && (board[x - 1, y -1] == ChessPiece.Empty || board[x-1, y-1] < ChessPiece.Empty))
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x,y), new ChessLocation(x - 1, y - 1)));
+                }
+                // king moves up and right
+                if (y < ChessBoard.NumberOfColumns && x > 0 && (board[x - 1, y + 1] == ChessPiece.Empty || board[x - 1, y + 1] < ChessPiece.Empty))
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 1, y + 1)));
+                }
+                //king right moves
+                if(y < ChessBoard.NumberOfColumns && (board[x, y + 1] == ChessPiece.Empty || board[x, y + 1] == ChessPiece.Empty ))
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x,y), new ChessLocation(x, y + 1)));
+                }
+                //king moves left
+                if(y > 0 && (board[x, y -1] < ChessPiece.Empty || board[x, y - 1] < ChessPiece.Empty)) 
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x,y), new ChessLocation(x, y - 1)));
+                }
+                //king moves down and left
+                if (y > 0 && x < ChessBoard.NumberOfRows && board[x + 1, y - 1] < ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y - 1)));
+                }
+                //king moves down
+                if(x < ChessBoard.NumberOfRows && (board[x + 1, y] == ChessPiece.Empty || board[x + 1, y] < ChessPiece.Empty))
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x,y),new ChessLocation(x + 1, y) ));
+                }
+                //king moves down and right
+                if (y < ChessBoard.NumberOfColumns && x < ChessBoard.NumberOfRows && (board[x + 1, y + 1] == ChessPiece.Empty || board[x + 1, y + 1] < ChessPiece.Empty))
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y + 1)));
+                }
+            }
+            else
+            {
+                if (board[x + 1, y] == ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y)));
+                }
+                if (y > 0 && board[x + 1, y - 1] > ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y - 1)));
+                }
+                if (y < ChessBoard.NumberOfColumns && board[x + 1, y + 1] < ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x + 1, y + 1)));
+                }
+                if (x == 2 && board[x + 1, y] == ChessPiece.Empty && board[x + 2, y] == ChessPiece.Empty)
+                {
+                    Moves.Add(new ChessMove(new ChessLocation(x, y), new ChessLocation(x - 2, y)));
+                }
+            }
+        }
         }
     }
 }
